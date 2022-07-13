@@ -1,7 +1,7 @@
 /* removing annoying auto padding */
 body,
 ul {
-padding: 0;
+  padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -143,55 +143,58 @@ li {
 /* Projects */
 
 /* turning the anchors into Flex */
-.Projects a,.ListObject{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    position: relative;
-    flex-direction: column;
+.Projects a,
+.ListObject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  position: relative;
+  flex-direction: column;
 }
 
 /* Change Flex mode at this breakppiint */
 @media only screen and (min-width: 768px) {
-.Projects a,.ListObject{
-  flex-direction: row;
-}
-/* for somereason I need to offset the anchor box by 5% of view height so it fits with other boxes? */
-.Projects a{
+  .Projects a,
+  .ListObject {
+    flex-direction: row;
+  }
+  /* for somereason I need to offset the anchor box by 5% of view height so it fits with other boxes? */
+  .Projects a {
     margin-left: 5vh;
-}
+  }
 }
 
 /* editing margins of children */
-.Projects a p{
-margin: 0;
+.Projects a p {
+  margin: 0;
 }
 
-.Projects li{
-    margin-top: 5vh;
+.Projects li {
+  margin-top: 5vh;
 }
 
-.Projects a{
-    width: fit-content;
-    text-decoration: none;
+.Projects a {
+  width: fit-content;
+  text-decoration: none;
 }
 
 /* adding margin to bottom of last child */
 .Projects ul li:last-child {
-margin-bottom: 5vh;
+  margin-bottom: 5vh;
 }
 
 /* img size */
-.Projects img{
-    display: block;
-    height: 30vh;
-    width: 30vh;
-    object-fit: cover;
-    border-radius: 5%;
+.Projects img {
+  min-width: 280px;
+  min-height: 280px;
+  display: block;
+  height: 30vh;
+  width: 30vh;
+  object-fit: cover;
+  border-radius: 5%;
 }
-
 
 /* Photos */
 .Photos ul,
@@ -199,6 +202,28 @@ li {
   list-style: none;
 }
 
-.Photos ul{
-display: flex;
+.Photos ul {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+.Photos img {
+  min-width: 280px;
+  min-height: 280px;
+  width: 30vh;
+  height: 30vh;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+/* Footer */
+.Footer {
+    margin-top: 5vh;
+  height: 20vh;
+  background-color:#323948;
 }
