@@ -1,22 +1,22 @@
 /* removing annoying auto padding */
 body,
 ul {
+padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 /* pause animations */
 .preload * {
-    -webkit-transition: none !important;
-    -moz-transition: none !important;
-    -ms-transition: none !important;
-    -o-transition: none !important;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
 }
 
-
-.NavHeaderWrapper{
-    border-radius: 0 0 10px 10px;
-    background-color: #323948;
+.NavHeaderWrapper {
+  border-radius: 0 0 10px 10px;
+  background-color: #323948;
 }
 /* The navigationBar */
 .HorizontalNav {
@@ -29,7 +29,6 @@ ul {
 /* Setting for list items */
 .HorizontalNav ul {
   display: flex;
-  padding: 0;
   height: 100%;
   list-style: none;
   list-style-image: none;
@@ -44,11 +43,11 @@ ul {
 
 /* adding rounded bottom to the first Item */
 .HorizontalNav li:first-child {
-    border-bottom-left-radius: 10px;
-  }
+  border-bottom-left-radius: 10px;
+}
 
 .HorizontalNav li p {
-  color: #71bfc5;
+  color: #2d3a57;
   font-size: 2.5vh;
   height: 100%;
   text-align: center;
@@ -61,7 +60,7 @@ ul {
 
 /* Header div styling */
 .Header {
-position: relative;
+  position: relative;
   width: 100%;
   height: 40vh;
   overflow: hidden;
@@ -76,27 +75,130 @@ position: relative;
 }
 
 /* display name on hover */
-.Header #HeaderHover
-{
-    display: block;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    background-color: #00000081;
-    -webkit-transition: opacity 0.3s ease-in-out;
-    -moz-transition: opacity 0.3s ease-in-out;
-    transition: opacity 0.3s ease-in-out;
-    opacity: 0;
+.Header #HeaderHover {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  background-color: #00000081;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
 }
 
-.Header #HeaderHover h1{
+.Header #HeaderHover h1 {
+  text-decoration: none;
+  font-weight: normal;
+  color: #fbfeff;
+}
+
+.Header:hover > #HeaderHover {
+  opacity: 1;
+}
+
+/* Content Globals */
+/* Text */
+.Content p,
+h1,
+a {
+  text-align: center;
+  color: #2d3a57;
+  font-size: 2vh;
+}
+.Content h1 {
+  font-size: 2.5vh;
+}
+/* Lists */
+.Content ul,
+li {
+  list-style: none;
+}
+
+/* Profile */
+
+/* Pic */
+.Profile #ProfilePic {
+  display: block;
+  margin-top: 5vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 18vh;
+  height: 18vh;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* little Line divider */
+.Divider {
+  background-color: #2d3a57;
+  margin-left: auto;
+  margin-right: auto;
+  height: 0.5vh;
+  width: 40vw;
+  border-radius: 5px;
+}
+
+/* Projects */
+
+/* turning the anchors into Flex */
+.Projects a,.ListObject{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    flex-direction: column;
+}
+
+/* Change Flex mode at this breakppiint */
+@media only screen and (min-width: 768px) {
+.Projects a,.ListObject{
+  flex-direction: row;
+}
+/* for somereason I need to offset the anchor box by 5% of view height so it fits with other boxes? */
+.Projects a{
+    margin-left: 5vh;
+}
+}
+
+/* editing margins of children */
+.Projects a p{
+margin: 0;
+}
+
+.Projects li{
+    margin-top: 5vh;
+}
+
+.Projects a{
+    width: fit-content;
     text-decoration: none;
-    font-weight: normal;
-    color: #fbfeff;
 }
 
-.Header:hover > #HeaderHover
-{
-    opacity: 1;
+/* adding margin to bottom of last child */
+.Projects ul li:last-child {
+margin-bottom: 5vh;
+}
+
+/* img size */
+.Projects img{
+    display: block;
+    height: 30vh;
+    width: 30vh;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+
+/* Photos */
+.Photos ul,
+li {
+  list-style: none;
+}
+
+.Photos ul{
+display: flex;
 }
