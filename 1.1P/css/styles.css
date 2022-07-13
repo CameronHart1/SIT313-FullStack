@@ -5,6 +5,15 @@ ul {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* pause animations */
+.preload * {
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -ms-transition: none !important;
+    -o-transition: none !important;
+}
+
+
 .NavHeaderWrapper{
     border-radius: 0 0 10px 10px;
     background-color: #323948;

@@ -5,24 +5,31 @@
     <title>Cameron Hart</title>
     <meta name="" content="My Page Description" />
     <link rel="stylesheet" href="css/styles.css?v=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js\scripts.js"></script>
   </head>
-  <body>
-    <script src="js/scripts.js"></script>
+  <body class="preload">
+    <!-- removing the preload class so transitions dont fire on page load -->
+    <script type="text/javascript">
+      $(function () {
+        $("body").removeClass("preload");
+      });
+    </script>
     <div class="NavHeaderWrapper">
-    <div class="HorizontalNav">
-      <ul>
-        <li><p>About</p></li>
-        <li><p>Contact</p></li>
-        <li><p>Work</p></li>
-      </ul>
-    </div>
-    <div class="Header">
-      <img src="assets\HeaderImage.png" id="HeaderImg" />
-      <div id="HeaderHover">
-        <h1>Hi, I'm Cameron</h1>
+      <div class="HorizontalNav">
+        <ul>
+          <li><p>About</p></li>
+          <li><p>Contact</p></li>
+          <li><p>Work</p></li>
+        </ul>
+      </div>
+      <div class="Header">
+        <img src="assets\HeaderImage.png" id="HeaderImg" />
+        <div id="HeaderHover">
+          <h1>Hi, I'm Cameron</h1>
+        </div>
       </div>
     </div>
-</div>
     <div></div>
   </body>
 </html>
