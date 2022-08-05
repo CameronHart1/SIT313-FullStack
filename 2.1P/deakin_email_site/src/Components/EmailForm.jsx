@@ -1,5 +1,5 @@
 import React from "react";
-
+import '../css/EmailForm.css';
 // function EmailForm(props) {
 //   return (
 //     <div style="display: flex">
@@ -14,6 +14,12 @@ import React from "react";
 //   );
 // }
 
+// The auto Email Functionaility
+// const sgMail = require('@sendgrid/mail');
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+
+
 //The getting email Form
 class EmailForm extends React.Component {
   constructor(props) {
@@ -23,21 +29,20 @@ class EmailForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData(event.target);
+    // const data = new FormData(event.target);
 
-    fetch("/api/form-submit-url", {
-      method: "POST",
-      body: data,
-    });
+    // document.getElementById("FormClass).classList.toggle("show")
+    // fetch('/api/form-submit-url', {
+    //   method: 'POST',
+    //   body: data,
+    // });
   }
-
-
-
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <div>        
+          <form onSubmit={this.handleSubmit}>
           <p>Sign up for our daily Insider</p>
 
           <input
@@ -47,9 +52,14 @@ class EmailForm extends React.Component {
             placeholder="example@email.com"
           />
 
-          <button name="SubmitEmail" type="submit">Confirm Email</button>
+          <button id="SubmitEmail" name="SubmitEmail" type="submit">Subscribe</button>
         </form>
+        </div>
+        <div id="FormClass">
+        <iframe scrolling="no" src="https://cdn.forms-content.sg-form.com/1ba83100-148c-11ed-8737-9eec31e793d8"/>
+        </div>
       </div>
+              
     );
   }
 }
