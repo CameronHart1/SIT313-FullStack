@@ -29,9 +29,9 @@ const Footer = () => {
         <div className="TopFlex">
           <h1>Stay Connected</h1>
           <ul className="HorizontalFlex">
-            <a>fb</a>
-            <a>twitter</a>
-            <a>insta</a>
+            <a href="https://www.facebook.com/"><img width="50px" src={process.env.PUBLIC_URL +"/107175_circle_facebook_icon.png"}/></a>
+            <a href="https://www.instagram.com/?hl=en"><img width="50px" src={process.env.PUBLIC_URL +"/107172_circle_instagram_icon.png"}/></a>
+            <a href="https://twitter.com/?lang=en"><img width="50px" src={process.env.PUBLIC_URL +"/107170_circle_twitter_icon.png"}/></a>
           </ul>
         </div>
       </div>
@@ -45,6 +45,12 @@ const Footer = () => {
           <a>Code of Conduct</a>
         </ul>
       </div>
+
+      {/* attribution */}
+      <div>
+      <a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a>
+      </div>
+      
     </div>
   );
 };
