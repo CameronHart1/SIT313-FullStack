@@ -130,7 +130,6 @@ const MakePost = () => {
           postFunction={submitPost}
         />
       </div>
-
     </div>
   );
 };
