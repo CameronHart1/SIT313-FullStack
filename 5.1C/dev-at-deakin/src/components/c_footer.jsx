@@ -11,19 +11,19 @@ const Footer = () => {
         <div className="TopFlex">
           <h1>Explore</h1>
           <ul className="VerticleFlex">
-            <a>Home</a>
-            <a>Questions</a>
-            <a>Articles</a>
-            <a>Tutorials</a>
+          <Link to="/">Home</Link>
+          <Link to="/posts/questions">Questions</Link>
+          <Link to="/posts/Articles">Articles</Link>
+          <Link to="/posts/Tutorials">Tutorials</Link>
           </ul>
         </div>
         {/* support pages */}
         <div className="TopFlex">
           <h1>Support</h1>
           <ul className="VerticleFlex">
-            <a>FAQs</a>
-            <a>Help</a>
-            <a>Contact Us</a>
+             <Link to="/faq/">FAQ</Link>
+             <Link to="/faq/help">Help</Link>
+             <Link to="/about/contact">Contact Us</Link>
           </ul>
         </div>
         {/* socials */}
@@ -41,9 +41,9 @@ const Footer = () => {
       <div className="BottomLinks">
         <h1>DEV@Deakin 2022</h1>
         <ul className="HorizontalFlex BottomFlex">
-          <Link to="/legal/priavcy-policy">Privacy Policy</Link>
-          <Link to="/legal/terms">Terms</Link>
-          <Link to="/legal/conduct-code">Code of Conduct</Link>
+          <Link to="/about/priavcy-policy">Privacy Policy</Link>
+          <Link to="/about/terms">Terms</Link>
+          <Link to="/about/conduct-code">Code of Conduct</Link>
         </ul>
       </div>
 

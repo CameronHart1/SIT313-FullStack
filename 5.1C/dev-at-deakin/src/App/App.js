@@ -9,35 +9,34 @@ import NoPage from "../pages/NoPage";
 import MakePost from "../pages/MakePost";
 
 const App = () => {
-  const [data, setData] = React.useState(null);
+  // const [, setData] = React.useState(null);
   const [articles, setArticles] = React.useState([{}]);
   const [tutorials, setTutorials] = React.useState([{}]);
 
   useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.message);
-      })
-      .then((data) => {});
+    // fetch("/api")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setData(data.message);
+    //   })
+    //   .then((data) => {});
     // getting JSONs
     fetch("./articles.json")
       .then((res) => res.json())
       .then((Jdata) => {
         setArticles(Jdata);
-        console.log("Parsed Articles");
+        // console.log("Parsed Articles");
       });
     fetch("./tutorials.json")
       .then((res) => res.json())
       .then((Jdata) => {
         setTutorials(Jdata);
-        console.log("Parsed Tutorials");
+        // console.log("Parsed Tutorials");
       });
   }, []);
 
-  // GetArticles();
-  // GetTutorials();
 
+  // console.log(data);
   // getting 10 random names from all the articles
   const defaultSearchArray = (length) =>
     []

@@ -83,7 +83,7 @@ const MakePost = () => {
           onClick={isArticle}
           defaultChecked
         />
-        <label for="article">Article</label>
+        <label htmlFor="article">Article</label>
         <input
           type="radio"
           id="question"
@@ -91,7 +91,7 @@ const MakePost = () => {
           value="Question"
           onClick={isArticle}
         />
-        <label for="question">Question</label>
+        <label htmlFor="question">Question</label>
       </div>
 
       {/* Content 
@@ -134,9 +134,13 @@ const MakePost = () => {
     </div>
   );
 };
+
+
+
 // -----------------------------------------------------------------------------------
 // could move these to their own component files, but no real point
 // seperate functions so they don't lose their data
+
 const TitleComp = (props) => {
   return (
     <div className="IdDiv">
