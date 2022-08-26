@@ -1,6 +1,7 @@
 .headerBackground {
   display: flex;
 
+  height: 30px;
   padding-top: 10px;
   align-items: stretch;
   justify-content: space-between;
@@ -74,5 +75,5 @@ h1 {
 
 #DevTitle:hover {
   color: #25253f;
-font-weight: bolder;
+  font-weight: bolder;
 }

@@ -1,0 +1,51 @@
+.greyBox {
+  background-color: #d3d3d3;
+}
+
+.contentDiv {
+  width: 60%;
+  margin-left: 20%;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+}
+
+.IdDiv {
+  display: flex;
+}
+
+.IdDiv label {
+  padding-right: 10px;
+}
+
+.IdDiv input {
+  flex-grow: 1;
+}
+
+.SubmitPostButton {
+  padding-top: 20px;
+}
+
+.SubmitPostButton button {
+  width: 20%;
+  float: right;
+  border: none;
+  font-size: large;
+  background-color: #a1a1a1;
+  margin: 0;
+}
+
+.SubmitPostButton button:hover {
+    background-color: #676666;
+  }
+  
+
+.SubmitPostButton p
+{
+    text-align: left;
+    margin: 5px;
+    font-size: small;
+    color: #da5d76;
+}

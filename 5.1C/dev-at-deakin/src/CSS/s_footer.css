@@ -1,6 +1,7 @@
 .FooterMain {
   margin-top: 20px;
   padding-bottom: 50px;
+  width: 100%;
   background-color: #06584e;
   display: flex;
   flex-direction: column;

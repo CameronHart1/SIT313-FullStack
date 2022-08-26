@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LargeTextBox from "../components/c_large_text_box";
+import "../CSS/p_make_post.css";
 
 const MakePost = () => {
   const [content, setContent] = useState(["", "", "", []]);
@@ -49,7 +49,7 @@ const MakePost = () => {
     )}`;
     const link = document.createElement("a");
     link.href = jsonString;
-    link.download = `${article?"Article":"Question"}_Post.json`;
+    link.download = `${article ? "Article" : "Question"}_Post.json`;
     link.click();
   };
 
@@ -57,7 +57,7 @@ const MakePost = () => {
   const abstractBox = article ? (
     <LargeTextBox
       handleTextChange={(val) => handleContentChange(val, 1)}
-      title={"abstract"}
+      title={"Abstract"}
       placeHolder={"A short Description of your article"}
       wordLimit="250"
       Rows="5"
@@ -68,10 +68,13 @@ const MakePost = () => {
 
   // Render -------------------------------------
   return (
-    <div>
+    <div className="contentDiv">
+      <div className="greyBox">
+        <h4>New Post</h4>
+      </div>
       {/* radio box */}
       <div>
-        <p>Post Type</p>
+        <label> Select Post Type: </label>
         <input
           type="radio"
           id="article"
@@ -93,41 +96,50 @@ const MakePost = () => {
 
       {/* Content 
        -----------------------------
-        Title */}
-      <TitleComp handleTextChange={(val) => handleTitleChange(val)} />
+    */}
+      <div>
+        <div className="greyBox">
+          <h4>What do you want to ask or share?</h4>
+        </div>
 
-      {/* Abstract, with conditional rendering*/}
-      {abstractBox}
+        {/* Title */}
 
-      {/* Content box */}
-      <LargeTextBox
-        handleTextChange={(val) => handleContentChange(val, 2)}
-        title={article ? "Article Content" : "Question"}
-        placeHolder={article ? "Article Content" : "Question"}
-        wordLimit="500"
-        Rows="20"
-        Columns="100"
-      />
+        <TitleComp handleTextChange={(val) => handleTitleChange(val)} />
 
-      {/* Tags */}
-      <TagComp handleTextChange={(val) => handleTagChange(val)} />
+        {/* Abstract, with conditional rendering*/}
+        {abstractBox}
 
-      {/* ------------------------------
+        {/* Content box */}
+        <LargeTextBox
+          handleTextChange={(val) => handleContentChange(val, 2)}
+          title={article ? "Article Text" : "Describe your problem"}
+          placeHolder={"Minimum 30 characters"}
+          wordLimit="500"
+          Rows="20"
+          Columns="100"
+        />
+
+        {/* Tags */}
+        <TagComp handleTextChange={(val) => handleTagChange(val)} />
+
+        {/* ------------------------------
        Submit Button*/}
-      <PostButton
-        content={content}
-        article={article}
-        postFunction={submitPost}
-      />
+        <PostButton
+          content={content}
+          article={article}
+          postFunction={submitPost}
+        />
+      </div>
+
     </div>
   );
 };
-
-// could these to their own component files, but no real points
+// -----------------------------------------------------------------------------------
+// could move these to their own component files, but no real point
 // seperate functions so they don't lose their data
 const TitleComp = (props) => {
   return (
-    <div>
+    <div className="IdDiv">
       <label>Title </label>
       <input
         type="text"
@@ -137,10 +149,41 @@ const TitleComp = (props) => {
     </div>
   );
 };
+// -----------------------------------------------------------------------------------
+const LargeTextBox = (props) => {
+  const WordLimit = props.WordLimit;
+  const Rows = props.Rows;
+  const Col = props.Columns;
+  const title = props.title;
+  const placeHolder = props.placeHolder;
+  const startText = props.text ? props.text : "";
+
+  // const textChangedHandler = (event) => {
+
+  // };
+
+  return (
+    <div>
+      <p>{title}</p>
+      <textarea
+        type="text"
+        id="TextInput"
+        name="TextInput"
+        maxLength={WordLimit}
+        rows={Rows}
+        cols={Col}
+        placeholder={placeHolder}
+        onChange={(e) => props.handleTextChange(e.target.value)}
+        defaultValue={startText}
+      />
+    </div>
+  );
+};
+// -----------------------------------------------------------------------------------
 const TagComp = (props) => {
   return (
-    <div id="TagsDiv">
-      <label>Tags </label>
+    <div className="IdDiv">
+      <label>Tags</label>
       <input
         type="text"
         placeholder='At least 3 tags, seperate with:" ",#'
@@ -154,7 +197,7 @@ const TagComp = (props) => {
     </div>
   );
 };
-
+// -----------------------------------------------------------------------------------
 const PostButton = (props) => {
   const [error, setError] = useState([]);
   const content = props.content;
@@ -194,11 +237,11 @@ const PostButton = (props) => {
       : null;
 
   return (
-    <div id="SubmitPostButton">
+    <div className="SubmitPostButton">
       <button onClick={errorCheck}>Post</button>
       {errorText}
     </div>
   );
 };
-
+// -----------------------------------------------------------------------------------
 export default MakePost;
