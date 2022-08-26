@@ -64,3 +64,15 @@ h1 {
 .searchBar:focus + .searchSuggestions {
   display: flex;
 }
+
+#DevTitle {
+  text-decoration: none;
+  font-size: large;
+  font-weight: bold;
+  color: black;
+}
+
+#DevTitle:hover {
+  color: #25253f;
+font-weight: bolder;
+}

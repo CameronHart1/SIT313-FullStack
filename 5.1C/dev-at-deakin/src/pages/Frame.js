@@ -12,9 +12,10 @@ import { Outlet } from "react-router-dom";
 // import NoPage from "./pages/NoPage";
 
 const Frame = (props) => {
+  const defaultSearch = props.options;
   return (
     <div>
-      <HeadBar options={props.defaultSearchOptions}></HeadBar>
+      <HeadBar options={defaultSearch}></HeadBar>
       <Outlet />
       <Footer />
     </div>

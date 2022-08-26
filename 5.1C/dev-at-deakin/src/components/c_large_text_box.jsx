@@ -7,6 +7,7 @@ const LargeTextBox = (props) => {
   const Col = props.Columns;
   const title = props.title;
   const placeHolder = props.placeHolder;
+  const startText = props.text ? props.text : "";
 
   // const textChangedHandler = (event) => {
 
@@ -24,7 +25,7 @@ const LargeTextBox = (props) => {
         cols={Col}
         placeholder={placeHolder}
         onChange={(e) => props.handleTextChange(e.target.value)}
-      />
+        defaultValue={startText}/>
     </div>
   );
 };
