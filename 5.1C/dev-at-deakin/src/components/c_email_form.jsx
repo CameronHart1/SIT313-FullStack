@@ -16,7 +16,7 @@ const EmailForm = (props) => {
   return (
     <div id="FormClass">
       <p>{showText ? SignUpText : AfterText}</p>
-      <iframe name="EmptyFrame" className="Hidden" />
+      <iframe title="EmptyFrame" name="EmptyFrame" className="Hidden" />
       {/* Form submits  */}
         <form
           id="EmailForm"

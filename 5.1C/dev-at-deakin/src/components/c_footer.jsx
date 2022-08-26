@@ -30,9 +30,9 @@ const Footer = () => {
         <div className="TopFlex">
           <h1>Stay Connected</h1>
           <ul className="HorizontalFlex">
-            <a href="https://www.facebook.com/"><img width="50px" src={process.env.PUBLIC_URL +"/107175_circle_facebook_icon.png"}/></a>
-            <a href="https://www.instagram.com/?hl=en"><img width="50px" src={process.env.PUBLIC_URL +"/107172_circle_instagram_icon.png"}/></a>
-            <a href="https://twitter.com/?lang=en"><img width="50px" src={process.env.PUBLIC_URL +"/107170_circle_twitter_icon.png"}/></a>
+            <a href="https://www.facebook.com/"><img width="50px" src={process.env.PUBLIC_URL +"/107175_circle_facebook_icon.png"} alt="Facebook Logo"/></a>
+            <a href="https://www.instagram.com/?hl=en"><img width="50px" src={process.env.PUBLIC_URL +"/107172_circle_instagram_icon.png"} alt="Instagram Logo"/></a>
+            <a href="https://twitter.com/?lang=en"><img width="50px" src={process.env.PUBLIC_URL +"/107170_circle_twitter_icon.png"} alt="Twitter Logo"/></a>
           </ul>
         </div>
       </div>
