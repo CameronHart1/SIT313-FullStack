@@ -1,0 +1,79 @@
+.headerBackground {
+  display: flex;
+
+  height: 30px;
+  padding-top: 10px;
+  align-items: stretch;
+  justify-content: space-between;
+  background-color: #d0d0d0;
+}
+
+/* searchbar element */
+.searchContainer {
+  width: 60vw;
+}
+
+.searchBar {
+  width: 60vw;
+  display: inline-block;
+  height: 80%;
+  border: none;
+  padding-left: 10px;
+}
+
+.searchSuggestions {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  width: 60vw;
+  padding: 0;
+  margin: 0;
+  background-color: #e7e7e7;
+}
+
+.searchResult {
+  text-align: left;
+  background: transparent;
+  border: none !important;
+}
+
+/* DEV@DEAKIN */
+h1 {
+  font-size: medium;
+  flex-shrink: 1;
+  margin-left: 10px;
+}
+
+/* Header buttons */
+.headerButtonDiv {
+  height: inherit;
+}
+
+.headerButton {
+  max-width: 50px;
+  height: 100%;
+  background: transparent;
+  border: none !important;
+}
+
+/* hover animations  */
+.headerButton:hover,
+.searchResult:hover {
+  background-color: #909090;
+}
+
+.searchBar:focus + .searchSuggestions {
+  display: flex;
+}
+
+#DevTitle {
+  text-decoration: none;
+  font-size: large;
+  font-weight: bold;
+  color: black;
+}
+
+#DevTitle:hover {
+  color: #25253f;
+  font-weight: bolder;
+}
