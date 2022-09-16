@@ -1,8 +1,9 @@
 import React from "react";
 
 import HeadBar from "../components/c_search_header.jsx";
-
 import Footer from "../components/c_footer";
+
+import "../CSS/p_frame.css";
 
 import { Outlet } from "react-router-dom";
 // import Layout from "./pages/Layout";
@@ -14,7 +15,7 @@ import { Outlet } from "react-router-dom";
 const Frame = (props) => {
   const defaultSearch = props.options;
   return (
-    <div>
+    <div className="FrameDiv">
       <HeadBar options={defaultSearch}></HeadBar>
       <Outlet />
       <Footer />
