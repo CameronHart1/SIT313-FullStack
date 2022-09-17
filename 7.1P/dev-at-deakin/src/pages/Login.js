@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const { firstName, lastName,email, password, confirmPassword } = contact;
-
+// updating these vals
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContact((preValue) => {
@@ -43,7 +43,7 @@ const LoginPage = () => {
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocFromAuth(user);
   };
-
+// ligining in with email
   const handleSignIn = async(e) => {
     e.preventDefault();
     const { user } = await signIn(email,password);
@@ -51,7 +51,7 @@ const LoginPage = () => {
     console.log(user);
   };
 
-  // creating a new user
+  // creating a new user via email
   const handleSignUp = async(e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -70,6 +70,8 @@ const LoginPage = () => {
     }
   };
 
+
+  // Rendering
   return (
     <div className="LoginContainer">
       {/* logic for choosing which page to show*/}
@@ -86,7 +88,7 @@ const LoginPage = () => {
     </div>
   );
 };
-
+// -----------------------------------------------------------------------
 const SignIn = (props) => {
   return (
     <div>
@@ -120,7 +122,7 @@ const SignIn = (props) => {
     </div>
   );
 };
-
+// -----------------------------------------------------------------------
 const SignUp = (props) => {
   return (
     <div>
@@ -175,7 +177,8 @@ const SignUp = (props) => {
     </div>
   );
 };
-
+// -----------------------------------------------------------------------
+// to stop bloat
 const TextBar = (props) => {
   return (
     <input
