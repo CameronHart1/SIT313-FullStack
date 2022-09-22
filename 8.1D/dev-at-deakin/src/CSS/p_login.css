@@ -1,0 +1,82 @@
+.ColumnStretch {
+  display: flex;
+  width: 20vw;
+  min-width: 250px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.SignUpField {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.StretchText{
+    flex-grow: 1;
+}
+
+.LargerSignUp label{
+    width: 15vh;
+}
+
+.LargerSignUp {
+  display: flex;
+  width: 30vw;
+  min-width: 250px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  text-align: left;
+  column-gap: 40px;
+  }
+
+.LoginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* might move to another doc for reusability */
+.InvertButton {
+  border-style: double;
+  border-radius: 5px;
+  border-color: #275ed4;
+  background: none;
+  box-shadow: none;
+  outline: none;
+  color: #275ed4;
+  padding: 3px 5px 3px 5px;
+}
+
+.InvertButton:hover {
+  background-color: #275ed4;
+  color: #ffffff;
+}
+
+.HollowButton {
+  border-style: double;
+  border-color: #ffffff00;
+  border-radius: 5px;
+  background: #275ed4;
+  box-shadow: none;
+  color: #ffffff;
+  padding: 3px 5px 3px 5px;
+}
+
+.HollowButton:hover {
+  background: none;
+  color: #275ed4;
+
+  border-color: #275ed4;
+}
+
+.RightButton {
+  float: right;
+}
+
+.LoginButtonPadding {
+  margin-top: 30px;
+}
