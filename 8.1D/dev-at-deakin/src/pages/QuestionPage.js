@@ -1,11 +1,16 @@
 import React, { useContext, useState } from "react";
 import { PostContext } from "../context/posts.context";
 import moment from "moment";
+import "../CSS/s_questions.css";
 
 import "../CSS/p_frame.css";
 
 const QuestionPage = (props) => {
-  const questionsList = useContext(PostContext).currentPosts.questions;
+  const context = useContext(PostContext);
+
+  const [questionsList, setQuestionsList] = useState(
+    context.currentPosts.questions
+  );
   const [filter, setFilter] = useState({
     tags: [],
     text: "",
@@ -28,28 +33,13 @@ const QuestionPage = (props) => {
     });
   };
 
-  // one big filter function
-  const keys = Object.keys(questionsList).filter((i) => {
-    let qi = questionsList[i];
-    const df = filter.dateFilter;
-    const dd = moment(qi.date);
-    const id = filter.date ? moment(filter.date) : null;
-    console.log({ dd, id });
-    const dateTest = () => {
-      if (df != "none") {
-        if (df == "After") return dd.isSameOrAfter(id, "day");
-        if (df == "Before") return dd.isSameOrBefore(id, "day");
-        if (df == "Equal") return dd.isSame(id, "day");
-      }
-      return true;
-    };
-
-    return `${qi.title} ${qi.content}`.includes(filter.text)
-      ? filter.tags.length > 0
-        ? qi.tags.sort().includes(...filter.tags.sort())
-        : dateTest()
-      : false;
-  });
+  const removeBox = (id) => {
+    console.log("removed " + id);
+    const tmp = Object.keys(questionsList).
+    filter((k) => k != id).
+    reduce((cur, k) => { return Object.assign(cur, { [k]: questionsList[k] })}, {});
+    setQuestionsList(tmp);
+  };
 
   return (
     <div>
@@ -83,16 +73,57 @@ const QuestionPage = (props) => {
         />
       )}
       <h1>Questions</h1>
-      <div>
-        {keys.map((q) => {
-          return <QuestionView key={q} question={questionsList[q]} />;
-        })}
-      </div>
+      <QuestionList
+        questionsList={questionsList}
+        filter={filter}
+        removeBox={removeBox}
+      />
     </div>
   );
 };
 
 export default QuestionPage;
+
+const QuestionList = (props) => {
+  const { questionsList, filter, removeBox } = props;
+
+  // one big filter function
+  const keys = Object.keys(questionsList).filter((i) => {
+    let qi = questionsList[i];
+    const df = filter.dateFilter;
+    const dd = moment(qi.date);
+    const id = filter.date ? moment(filter.date) : null;
+    const dateTest = () => {
+      if (df != "none") {
+        if (df == "After") return dd.isSameOrAfter(id, "day");
+        if (df == "Before") return dd.isSameOrBefore(id, "day");
+        if (df == "Equal") return dd.isSame(id, "day");
+      }
+      return true;
+    };
+
+    return `${qi.title} ${qi.content}`.includes(filter.text)
+      ? filter.tags.length > 0
+        ? qi.tags.sort().includes(...filter.tags.sort())
+        : dateTest()
+      : false;
+  });
+
+  return (
+    <div>
+      {keys.map((q) => {
+        return (
+          <QuestionView
+            key={q}
+            question={questionsList[q]}
+            id={q}
+            removeBox={removeBox}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 const QuestionView = (props) => {
   const [expanded, setExpanded] = useState(false);
@@ -103,17 +134,22 @@ const QuestionView = (props) => {
   };
 
   return (
-    <div onClick={ToggleExpand}>
-      <h1>{title}</h1>
-      {expanded && (
-        <div>
-          <p>
-            Author: {author} Date: {moment(date).format("MMM Do YYYY")}
-          </p>
-          <p>{content}</p>
-        </div>
-      )}
-      <p className="tags">tags: {tags.join(" ")}</p>
+    <div className="QuestionBoxDiv">
+      <div className="expandDiv" onClick={ToggleExpand}>
+        <h1>{title}</h1>
+        {expanded && (
+          <div>
+            <p>
+              Author: {author} Date: {moment(date).format("MMM Do YYYY")}
+            </p>
+            <p>{content}</p>
+          </div>
+        )}
+        <p className="tags">tags: {tags.join(" ")}</p>
+      </div>
+      <div className="deleteDiv" onClick={(e) => props.removeBox(props.id)}>
+        <p>Delete</p>
+      </div>
     </div>
   );
 };

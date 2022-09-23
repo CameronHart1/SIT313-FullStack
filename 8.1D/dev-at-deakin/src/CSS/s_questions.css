@@ -1,0 +1,29 @@
+.QuestionBoxDiv {
+  display: flex;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.expandDiv {
+    background-color: #f0f8ff;
+  flex-grow: 1;
+  text-align: left;
+}
+.expandDiv:hover{
+    background-color: #dae1e8;
+}
+.expandDiv h1 p {
+  width: fit-content;
+}
+.deleteDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-width: 10vw;
+  background-color: #c46363;
+}
+.deleteDiv:hover {
+  background-color: #c51919;
+}
