@@ -98,7 +98,7 @@ const QuestionList = (props) => {
       if (df != "none") {
         if (df == "After") return dd.isSameOrAfter(id, "day");
         if (df == "Before") return dd.isSameOrBefore(id, "day");
-        if (df == "Equal") return dd.isSame(id, "day");
+        if (df == "Same") return dd.isSame(id, "day");
       }
       return true;
     };
