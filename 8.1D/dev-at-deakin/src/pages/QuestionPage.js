@@ -33,6 +33,7 @@ const QuestionPage = (props) => {
     });
   };
 
+  // it's wierd but mutating the array with delet doesnt live update so instead we filter out the deleted ID
   const removeBox = (id) => {
     console.log("removed " + id);
     const tmp = Object.keys(questionsList).
@@ -101,10 +102,11 @@ const QuestionList = (props) => {
       }
       return true;
     };
+    const concatTags = qi.tags.sort().join(" ")
 
     return `${qi.title} ${qi.content}`.includes(filter.text)
       ? filter.tags.length > 0
-        ? qi.tags.sort().includes(...filter.tags.sort())
+        ? filter.tags.every((e)=>concatTags.includes(e))
         : dateTest()
       : false;
   });
