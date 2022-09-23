@@ -9,8 +9,22 @@ import {
   setPersistence,
   browserSessionPersistence,
   signOut,
+  connectAuthEmulator,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  getDocs,
+  query,
+  addDoc,
+} from "firebase/firestore";
+import { ref, uploadBytes, getStorage, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,6 +50,7 @@ export const auth = getAuth();
 setPersistence(auth, browserSessionPersistence);
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 export const db = getFirestore();
+const storage = getStorage(firebaseapp);
 
 export const signIn = (email, password) =>
   signInWithEmailAndPassword(auth, email, password);
@@ -85,14 +100,6 @@ export const LoggedInUser = async () => {
         `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
       )
     );
-    if (sessionStorage.getItem("UserDoc") == null) {
-      const userRef = doc(db, "users", data.uid);
-      const entry = await getDoc(userRef);
-      sessionStorage.setItem(
-        "UserDoc",
-        JSON.stringify(entry._document.data.value.mapValue.fields)
-      );
-    }
     return data;
   } catch (error) {
     console.log("error in loggedInUser: " + error.message);
@@ -102,4 +109,92 @@ export const LoggedInUser = async () => {
 
 export const signOutUser = () => {
   signOut(auth);
+};
+// ---------------------------------------
+export const addCollectionAndDocument = async (collectionKey, objectsToAdd) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  objectsToAdd.forEach((obj) => {
+    const docRef = doc(collectionRef, obj.id.toLowercase());
+    batch.set(docRef, obj);
+  });
+  await batch.commit();
+  console.log("succesful batch commit");
+};
+
+// --------------------------------------
+export const fetchQuestionsAndTutorials = async () => {
+  const articleCollectionRef = collection(db, "Articles");
+  const aq = query(articleCollectionRef);
+  const articleSnaphsot = await getDocs(aq);
+  const ArticleMap = articleSnaphsot.docs.reduce((acc, docSnapshot) => {
+    const { ...items } = docSnapshot.data();
+    console.log(docSnapshot);
+    acc[docSnapshot.id] = items;
+    return acc;
+  }, {});
+
+  const questionCollectionRef = collection(db, "Questions");
+  const q = query(questionCollectionRef);
+  const questionSnaphsot = await getDocs(q);
+  console.log(questionSnaphsot);
+  const QuestionMap = questionSnaphsot.docs.reduce((acc, docSnapshot) => {
+    const { ...items } = docSnapshot.data();
+    acc[docSnapshot.id] = items;
+    return acc;
+  }, {});
+  return { questions: QuestionMap, articles: ArticleMap };
+};
+
+export const getUserData = async (ref) => {
+  const snap = await getDoc(ref);
+  return snap.data();
+};
+// ------------------------------------
+export const uploadImage = async (img) => {
+  if (img == null) return;
+  const imageRef = ref(storage, `images/${uuidv4()}${img.name}`);
+  await uploadBytes(imageRef, img);
+  console.log("uploaded");
+  return imageRef;
+};
+// ----------------------------------
+export const uploadArticle = async (
+  title,
+  abstract,
+  img,
+  content,
+  tags,
+  author
+) => {
+  const imageRef = await uploadImage(img);
+  const imgURL = await getDownloadURL(imageRef);
+  console.log(imgURL);
+
+  const ArticleObj = {
+    title: title,
+    abstract: abstract,
+    img: imgURL.toString(),
+    content: content,
+    tags: tags,
+    author: author,
+    rating: 0,
+    rateCount: 0,
+  };
+
+  const docRef = await addDoc(collection(db, "Articles"), ArticleObj);
+
+  return { ref: docRef, obj: ArticleObj };
+};
+// to update count / rating, we need count++, current + (new - current)/count= new rating
+
+export const uploadQuestion = async (title, content, tags, author) => {
+  const QuestionObj = {
+    title: title,
+    content: content,
+    tags: tags,
+    author: author,
+  };
+  const docRef = await addDoc(collection(db, "Questions"), QuestionObj);
+  return { ref: docRef, obj: QuestionObj };
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import "../CSS/p_login.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,13 +9,16 @@ import {
   signIn,
   LoggedInUser,
   signOutUser,
+  getUserData,
 } from "../utils/firebase";
+import { UserContext } from "../context/user.context";
 
 // const for email,
 // Check validity boxes for passowrd /
 // optional name box
 
 const LoginPage = () => {
+  const {setCurrentUser,currentUser} = useContext(UserContext)
   const { SignType } = useParams();
   const [contact, setContact] = useState({
     firstName: "",
@@ -46,7 +49,7 @@ const LoginPage = () => {
 
   const signOut = () => {
     signOutUser();
-    sessionStorage.removeItem("UserDoc");
+    setCurrentUser(null);
     navigate("/login/sign-in");
   };
 
@@ -56,6 +59,9 @@ const LoginPage = () => {
     e.preventDefault();
     const { user } = await signInWithGooglePopup();
     const userDocRef = await createUserDocFromAuth(user);
+    // promise stuff
+    getUserData(userDocRef).then((data)=>setCurrentUser(data));
+    
     navigate("/profile");
   };
   // ligining in with email
@@ -63,7 +69,8 @@ const LoginPage = () => {
     e.preventDefault();
     const { user } = await signIn(email, password);
     const userDocRef = await createUserDocFromAuth(user);
-    console.log(user);
+    // proimise stuff
+    getUserData(userDocRef).then((data)=>setCurrentUser(data));
     navigate("/profile");
   };
 

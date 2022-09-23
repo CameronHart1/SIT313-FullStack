@@ -1,71 +1,80 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../CSS/p_make_post.css";
-import { db } from "../utils/firebase";
+import { db, uploadArticle, uploadQuestion } from "../utils/firebase";
+import { UserContext } from "../context/user.context";
+import { PostContext } from "../context/posts.context";
+// add image uplaod
 
 const MakePost = () => {
-  const [content, setContent] = useState(["", "", "", []]);
+  const [content, setContent] = useState({
+    title: "",
+    abstract: "",
+    content: "",
+    img: {},
+    tags: [],
+  });
   const [article, setArticle] = useState(true);
+  const { currentUser } = useContext(UserContext);
+  const { setCurrentPosts, currentPosts } = useContext(PostContext);
 
   // for switching between layouts
   const isArticle = (e) => setArticle(e.target.value === "Article");
 
   // Changing Content data
-  // ----------
-  // for title
-  const handleTitleChange = (newVal) =>
-    setContent([newVal, content[1], content[2], content[3]]);
-  // For storing abstract or content
-  const handleContentChange = (newVal, index) =>
-    setContent(
-      index === 1
-        ? [content[0], newVal, content[2], content[3]]
-        : [content[0], content[1], newVal, content[3]]
-    );
-  // for tags
-  const handleTagChange = (newVal) =>
-    setContent([content[0], content[1], content[2], newVal]);
-  // ----------
-
-  // Posting
-  const submitPost = () => {
-    // just downloading content as JSON
-
-    // turning data into JSON
-    var jsonOBJ = article
-      ? {
-          title: content[0],
-          abstract: content[1],
-          content: content[2],
-          tags: content[3],
-        }
-      : {
-          title: content[0],
-          content: content[2],
-          tags: content[3],
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContent((preValue) => {
+      if (name == "tags")
+        return {
+          ...preValue,
+          [name]: value.split(/(?:,| |#)+/).filter((s) => s),
         };
-
-    // https://codesandbox.io/s/4t2xb?file=/src/App.js:1112-1382
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(jsonOBJ)
-    )}`;
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = `${article ? "Article" : "Question"}_Post.json`;
-    link.click();
+      return {
+        ...preValue,
+        [name]: value,
+      };
+    });
   };
 
-  // Conditional rendering for abstract Box
-  const abstractBox = article ? (
-    <LargeTextBox
-      handleTextChange={(val) => handleContentChange(val, 1)}
-      title={"Abstract"}
-      placeHolder={"A short Description of your article"}
-      wordLimit="250"
-      Rows="5"
-      text={content[1]}
-      Columns="50"
-    />
-  ) : null;
+  const handleImageChange = (e) => {
+    const value = e.target.files[0];
+    setContent((preValue) => {
+      return {
+        ...preValue,
+        img: value,
+      };
+    });
+  };
+
+  // Posting
+  const submitPost = async () => {
+    if (article) {
+      const imageRef = await uploadArticle(
+        content.title,
+        content.abstract,
+        content.img,
+        content.content,
+        content.tags,
+        currentUser ? currentUser.displayName : "Anon"
+      );
+      var tmp = currentPosts;
+      tmp.articles[imageRef.ref.id] = { ...imageRef.obj };
+      setCurrentPosts(currentPosts);
+        return imageRef;
+    }
+    // --
+
+    const imageRef = await uploadQuestion(
+      content.title,
+      content.content,
+      content.tags,
+      currentUser ? currentUser.displayName : "Anon"
+    );
+    var tmp = currentPosts
+    tmp.questions[imageRef.ref.id] = { ...imageRef.obj };
+    setCurrentPosts(currentPosts);
+    return imageRef;
+  };
 
   // Render -------------------------------------
   return (
@@ -102,27 +111,41 @@ const MakePost = () => {
         <div className="greyBox">
           <h4>What do you want to ask or share?</h4>
         </div>
-
         {/* Title */}
-
-        <TitleComp handleTextChange={(val) => handleTitleChange(val)} />
-
+        <TitleComp handleTextChange={handleChange} />
+        {/* IMG */}
+        {article && (
+          <ImageComp
+            handleImageChange={handleImageChange}
+            default={content.image}
+          />
+        )}
         {/* Abstract, with conditional rendering*/}
-        {abstractBox}
+        {article && (
+          <LargeTextBox
+            handleTextChange={handleChange}
+            title={"Abstract"}
+            name="abstract"
+            placeHolder={"A short Description of your article"}
+            text={content.abstract}
+            wordLimit="250"
+            Rows="5"
+            Columns="50"
+          />
+        )}
 
         {/* Content box */}
         <LargeTextBox
-          handleTextChange={(val) => handleContentChange(val, 2)}
+          handleTextChange={handleChange}
           title={article ? "Article Text" : "Describe your problem"}
           placeHolder={"Minimum 30 characters"}
           wordLimit="500"
           Rows="20"
+          name="content"
           Columns="100"
         />
-
         {/* Tags */}
-        <TagComp handleTextChange={(val) => handleTagChange(val)} />
-
+        <TagComp handleTextChange={handleChange} />
         {/* ------------------------------
        Submit Button*/}
         <PostButton
@@ -135,8 +158,6 @@ const MakePost = () => {
   );
 };
 
-
-
 // -----------------------------------------------------------------------------------
 // could move these to their own component files, but no real point
 // seperate functions so they don't lose their data
@@ -147,37 +168,44 @@ const TitleComp = (props) => {
       <label>Title </label>
       <input
         type="text"
+        name="title"
         placeholder="A short, descriptive title"
-        onChange={(e) => props.handleTextChange(e.target.value)}
+        onChange={props.handleTextChange}
+      />
+    </div>
+  );
+};
+// -----------------------------------------------------------------------------------
+const ImageComp = (props) => {
+  return (
+    <div>
+      <p>Add an image</p>
+      <input
+        type="file"
+        defaultValue={props.default}
+        accept="image/*"
+        id="ImageInput"
+        onChange={props.handleImageChange}
       />
     </div>
   );
 };
 // -----------------------------------------------------------------------------------
 const LargeTextBox = (props) => {
-  const WordLimit = props.WordLimit;
-  const Rows = props.Rows;
-  const Col = props.Columns;
-  const title = props.title;
-  const placeHolder = props.placeHolder;
+  const { WordLimit, Rows, Col, title, name, placeHolder } = props;
   const startText = props.text ? props.text : "";
-
-  // const textChangedHandler = (event) => {
-
-  // };
-
   return (
     <div>
       <p>{title}</p>
       <textarea
         type="text"
         id="TextInput"
-        name="TextInput"
+        name={name}
         maxLength={WordLimit}
         rows={Rows}
         cols={Col}
         placeholder={placeHolder}
-        onChange={(e) => props.handleTextChange(e.target.value)}
+        onChange={props.handleTextChange}
         defaultValue={startText}
       />
     </div>
@@ -190,13 +218,10 @@ const TagComp = (props) => {
       <label>Tags</label>
       <input
         type="text"
+        name="tags"
         placeholder='At least 3 tags, seperate with:" ",#'
         // using regex to split hashtags and filtertring out any empty values
-        onChange={(e) =>
-          props.handleTextChange(
-            e.target.value.split(/(?:,| |#)+/).filter((s) => s)
-          )
-        }
+        onChange={props.handleTextChange}
       />
     </div>
   );
@@ -210,22 +235,22 @@ const PostButton = (props) => {
   const errorCheck = () => {
     var errors = [];
     // checking they are above lengths / are needed
-    if (content[0].length < 5)
+    if (content.title.length < 5)
       errors.push({
         error: "NO_TITLE",
         msg: "Title is too short. Minimum 5 characters",
       });
-    if (props.article && content[1].length < 20)
+    if (props.article && content.abstract.length < 20)
       errors.push({
         error: "NO_ABSTR",
         msg: "Abstract is too short. Minimum 20 characters",
       });
-    if (content[2].length < 30)
+    if (content.content.length < 30)
       errors.push({
         error: "NO_CONTENT",
         msg: "Content is too short. Minimum 30 charcaters",
       });
-    if (content[3].length < 3)
+    if (content.tags.length < 3)
       errors.push({ error: "NO_TAGS", msg: "Not enough tags. Minimum 3 tags" });
 
     if (errors.length > 0) setError(errors);
@@ -247,12 +272,5 @@ const PostButton = (props) => {
     </div>
   );
 };
-// -----------------------------------------------------------------------------------
-// Firebase adding the data
-const UploadPost = (data) => {
-  const {message} = data;
-  const {image} = data;
-
-
-}
+// ----------------------------------------------------------------------------
 export default MakePost;

@@ -1,14 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './CSS/index.css';
-import App from './App/App';
-import reportWebVitals from './App/reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./CSS/index.css";
+import App from "./App/App";
+import reportWebVitals from "./App/reportWebVitals";
+import { PostProvider } from "./context/posts.context";
+import { UserProvider } from "./context/user.context";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <UserProvider>
+      <PostProvider>
+        <App />
+      </PostProvider>
+    </UserProvider>
   </React.StrictMode>
 );
 
@@ -47,4 +52,3 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
