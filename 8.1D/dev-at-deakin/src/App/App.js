@@ -8,6 +8,7 @@ import Home from "../pages/Home";
 import NoPage from "../pages/NoPage";
 import MakePost from "../pages/MakePost";
 import LoginPage from "../pages/Login";
+import QuestionPage from "../pages/QuestionPage";
 
 const App = () => {
   // const [, setData] = React.useState(null);
@@ -36,7 +37,6 @@ const App = () => {
       });
   }, []);
 
-
   // console.log(data);
   // getting 10 random names from all the articles
   const defaultSearchArray = (length) =>
@@ -61,6 +61,7 @@ const App = () => {
             <Route path="/login/:SignType" element={<LoginPage />} />
             {/* <Route path="blogs" element={<Blogs />} />
             <Route path="contact" element={<Contact />} /> */}
+            <Route path="/posts/questions" element={<QuestionPage/>}/>
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>

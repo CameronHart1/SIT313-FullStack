@@ -21,6 +21,7 @@ import {
   getDocs,
   query,
   addDoc,
+  Timestamp,
 } from "firebase/firestore";
 import { ref, uploadBytes, getStorage, getDownloadURL } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
@@ -131,6 +132,7 @@ export const fetchQuestionsAndTutorials = async () => {
     const { ...items } = docSnapshot.data();
     console.log(docSnapshot);
     acc[docSnapshot.id] = items;
+    acc[docSnapshot.id].date = new Date(acc[docSnapshot.id].date.seconds * 1000);
     return acc;
   }, {});
 
@@ -141,6 +143,7 @@ export const fetchQuestionsAndTutorials = async () => {
   const QuestionMap = questionSnaphsot.docs.reduce((acc, docSnapshot) => {
     const { ...items } = docSnapshot.data();
     acc[docSnapshot.id] = items;
+    acc[docSnapshot.id].date = new Date(acc[docSnapshot.id].date.seconds * 1000);
     return acc;
   }, {});
   return { questions: QuestionMap, articles: ArticleMap };
@@ -172,6 +175,7 @@ export const uploadArticle = async (
   console.log(imgURL);
 
   const ArticleObj = {
+    date: new Date(),
     title: title,
     abstract: abstract,
     img: imgURL.toString(),
@@ -190,6 +194,7 @@ export const uploadArticle = async (
 
 export const uploadQuestion = async (title, content, tags, author) => {
   const QuestionObj = {
+    date: new Date(),
     title: title,
     content: content,
     tags: tags,
