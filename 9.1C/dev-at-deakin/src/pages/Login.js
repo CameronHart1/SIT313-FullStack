@@ -29,9 +29,7 @@ const LoginPage = () => {
   });
 
   var user = null;
-  const displayName = sessionStorage.getItem("UserDoc")
-    ? JSON.parse(sessionStorage.getItem("UserDoc")).displayName.stringValue
-    : null;
+  const displayName = currentUser ? currentUser.displayName : null;
 
   const navigate = useNavigate();
   // --------------
@@ -64,6 +62,7 @@ const LoginPage = () => {
     
     navigate("/profile");
   };
+  
   // ligining in with email
   const handleSignIn = async (e) => {
     e.preventDefault();

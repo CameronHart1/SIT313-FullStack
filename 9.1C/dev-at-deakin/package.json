@@ -17,9 +17,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "server":"nodemon server.js",
+    "host":"concurrently \"npm run server\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+    
   },
   "proxy": "http://localhost:3001/",
   "eslintConfig": {

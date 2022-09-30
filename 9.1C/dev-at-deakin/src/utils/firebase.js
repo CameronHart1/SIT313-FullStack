@@ -78,14 +78,6 @@ export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
     }
   }
 
-  if (sessionStorage.getItem("UserDoc") == null) {
-    const entry = await getDoc(userDocRef);
-    sessionStorage.setItem(
-      "UserDoc",
-      JSON.stringify(entry._document.data.value.mapValue.fields)
-    );
-  }
-
   return userDocRef;
 };
 
